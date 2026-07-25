@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import patelUrl from "../../icons/petal.png"
+import leafUrl from "../../icons/leaf.svg"
 
 // 꽃잎의 이동 및 회전 속도 설정
 const X_SPEED = 0.6
@@ -106,7 +106,7 @@ export const BGEffect = () => {
 
     const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
     const petalImg = new Image()
-    petalImg.src = patelUrl
+    petalImg.src = leafUrl
 
     /**
      * 화면 크기에 따른 적절한 꽃잎 개수를 계산합니다.
