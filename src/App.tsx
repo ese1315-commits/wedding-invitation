@@ -9,6 +9,7 @@ import { Information } from "./component/information"
 import { GuestBook } from "./component/guestbook"
 import { LazyDiv } from "./component/lazyDiv"
 import { ShareButton } from "./component/shareButton"
+import { MusicButton } from "./component/musicButton"
 import { STATIC_ONLY } from "./env"
 
 /**
@@ -20,6 +21,8 @@ import { STATIC_ONLY } from "./env"
 function App() {
   return (
     <div className="background">
+      {/* 배경음악 재생 버튼 */}
+      <MusicButton />
       {/* 배경 애니메이션 효과 (예: 꽃잎 내리기) */}
       <BGEffect />
       <div className="card-view">
