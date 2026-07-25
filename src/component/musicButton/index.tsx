@@ -6,24 +6,26 @@ const baseUrl = import.meta.env.BASE_URL
  * 배경음악을 자동재생하는 컴포넌트입니다.
  * 화면에 보이는 버튼/아이콘 없이, 페이지 진입 시 자동재생을 시도합니다.
  * 브라우저 정책으로 자동재생이 막히면 사용자의 첫 터치/클릭 시점에 재생합니다.
- * capture 단계에서 이벤트를 감지하여, 다른 요소가 이벤트 전파를 막아도
- * 재생 시도가 확실히 되도록 처리합니다.
  *
- * public 폴더에 bgm.mp3 파일이 있어야 동작합니다.
+ * iOS Safari의 <audio> 태그는 기기의 무음 스위치에 의해 소리가 꺼지는
+ * 문제가 있어, 대신 소리 없는 1x1 영상 + 오디오가 합쳐진 <video> 태그를
+ * 사용합니다. (video 태그는 무음 스위치의 영향을 받지 않습니다.)
  *
- * @returns {JSX.Element} 배경음악 오디오 요소
+ * public 폴더에 bgm.mp4 파일이 있어야 동작합니다.
+ *
+ * @returns {JSX.Element} 배경음악 재생용 video 요소
  */
 export const MusicButton = () => {
-  const audioRef = useRef<HTMLAudioElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
+    const video = videoRef.current
+    if (!video) return
 
     let unlocked = false
 
     const tryPlay = () => {
-      audio
+      video
         .play()
         .then(() => {
           unlocked = true
@@ -66,5 +68,20 @@ export const MusicButton = () => {
     return removeListeners
   }, [])
 
-  return <audio ref={audioRef} src={`${baseUrl}bgm.mp3`} loop playsInline />
+  return (
+    <video
+      ref={videoRef}
+      src={`${baseUrl}/bgm.mp4`}
+      loop
+      playsInline
+      muted={false}
+      style={{
+        position: "fixed",
+        width: 1,
+        height: 1,
+        opacity: 0,
+        pointerEvents: "none",
+      }}
+    />
+  )
 }
